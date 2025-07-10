@@ -2,27 +2,43 @@
 
 A FastAPI-based backend service for job recommendations that matches user skills with job requirements.
 
+## Requirements
+
+- Python 3.13+
+
 ## Features
 
 - User profile management with skills
 - Job listing management
 - User-job interaction tracking (views and applications)
 - Skill-based job recommendations
+- Comprehensive error handling and input validation
+- Secure database operations
 
 ## Setup
 
-1. Create a virtual environment:
+1. Ensure you have Python 3.13 installed:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python3.13 --version
 ```
 
-2. Install dependencies:
+2. Create a virtual environment:
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
+
+3. Upgrade pip to the latest version:
+```bash
+pip install --upgrade pip
+```
+
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the application:
+5. Run the application:
 ```bash
 uvicorn app.main:app --reload
 ```
@@ -46,6 +62,10 @@ Once the server is running, you can access:
     "skills": ["Python", "FastAPI", "SQL"]
   }
   ```
+  Validation:
+  - Name: 1-100 characters
+  - Email: Valid email format
+  - Skills: Non-empty strings, max 50 skills
 
 ### Jobs
 - `POST /jobs/`: Create a new job listing
@@ -56,23 +76,32 @@ Once the server is running, you can access:
     "required_skills": ["Python", "FastAPI", "PostgreSQL"]
   }
   ```
+  Validation:
+  - Title: 1-200 characters
+  - Description: 1-2000 characters
+  - Required Skills: Non-empty strings, max 50 skills
 
 ### Interactions
 - `POST /interactions/`: Log a user-job interaction
   ```json
   {
     "job_id": 1,
-    "interaction_type": "view",  // or "apply"
-    "user_id": 1
+    "interaction_type": "view"  // or "apply"
   }
   ```
+  Query parameter:
+  - user_id: Positive integer
 
 ### Recommendations
 - `GET /recommendations/{user_id}`: Get top 3 job recommendations for a user
+  - Returns jobs sorted by match score (0.0 to 1.0)
+
 
 ## How It Works
 
 The recommendation system works by:
 1. Comparing user skills with job required skills
-2. Calculating a weighted match score based on the number of matching skills and applied jobs
-3. Returning the top 3 jobs with the highest match scores 
+2. Calculating a weighted match score based on:
+   - Number of matching skills
+   - Previously applied jobs (2x weight for matching skills)
+3. Returning the top 3 jobs with the highest match scores
