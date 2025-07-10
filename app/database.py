@@ -8,7 +8,7 @@ from fastapi import HTTPException
 
 load_dotenv()
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./sql_app.db")
 
 try:
     if SQLALCHEMY_DATABASE_URL.startswith("sqlite"):

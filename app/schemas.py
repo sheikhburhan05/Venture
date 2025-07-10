@@ -50,7 +50,9 @@ class Job(JobBase):
 
 class JobInteractionBase(BaseModel):
     job_id: int = Field(gt=0)
+    user_id: int = Field(gt=0)
     interaction_type: InteractionType
+    
 
     class Config:
         from_attributes = True

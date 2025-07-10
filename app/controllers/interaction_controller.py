@@ -6,5 +6,6 @@ from ..services import interaction_service
 def create_interaction(db: Session, interaction: JobInteractionCreate):
     return interaction_service.create_interaction(
         db=db,
+        user_id=interaction.user_id,
         interaction=interaction
     ) 
