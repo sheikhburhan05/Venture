@@ -1,0 +1,7 @@
+fastapi>=0.110.0  # Latest version with Pydantic v2 support
+uvicorn==0.27.1
+sqlalchemy>=2.0.28  # Version with Python 3.13 support
+pydantic>=2.6.3  # Latest version with Python 3.13 support
+python-dotenv==1.0.1
+typing-extensions>=4.9.0
+email-validator==2.1.0.post1  # For email validation 
