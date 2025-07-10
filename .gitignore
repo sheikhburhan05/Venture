@@ -92,6 +92,5 @@ dmypy.json
 
 # Project specific
 sql_app.db
-*.env
 .env.*
 !.env.example 
